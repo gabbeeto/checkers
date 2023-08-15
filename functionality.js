@@ -1,3 +1,8 @@
+mode = 'selectPlayer';
+
+
+
+
 class playerPiece{
 constructor(yPosition, xPosition ,order ){
 this.xPosition = xPosition;
@@ -5,7 +10,14 @@ this.yPosition = yPosition;
 this.order = order;
 }
 
-getPositionName(){
+getPositionNameForGameBoardArray(){
+let y = (this.yPosition -1) * 4;
+let x = this.xPosition;
+return y + x;
+
+}
+
+getPositionNameForId(){
 switch(this.yPosition){
 	case 1:
 		return `h${this.xPosition}`;
@@ -29,18 +41,78 @@ switch(this.yPosition){
 
 }
 
-moveDiagonallyToLeft(){
+
+moveDiagonallyToLeftToKill(){
 if(this.order == 'one'){
 this.yPosition = this.yPosition + 1;
-this.xPosition = this.yPosition - 1;
-displayPieces(playerOne);
+this.xPosition = this.xPosition - 2;
+displayPieces();
 }
+
 
 else if(this.order == 'two'){
 
 this.yPosition = this.yPosition - 1;
-this.xPosition = this.yPosition - 1;
-displayPieces(playerTwo);
+this.xPosition = this.xPosition - 2;
+displayPieces();
+}
+
+}  
+
+
+
+
+moveDiagonallyToLeft(){
+if(this.order == 'one'){
+this.yPosition = this.yPosition + 1;
+this.xPosition = this.xPosition - 1;
+displayPieces();
+}
+
+
+else if(this.order == 'two'){
+
+this.yPosition = this.yPosition - 1;
+this.xPosition = this.xPosition - 1;
+displayPieces();
+}
+
+}  
+
+
+moveDiagonallyToLeftToKill(){
+if(this.order == 'one'){
+this.yPosition = this.yPosition + 1;
+this.xPosition = this.xPosition + 2;
+displayPieces();
+}
+
+
+else if(this.order == 'two'){
+
+this.yPosition = this.yPosition - 1;
+this.xPosition = this.xPosition + 2;
+displayPieces();
+}
+
+}  
+
+
+
+
+moveDiagonallyToRight(){
+if(this.order == 'one'){
+this.yPosition = this.yPosition + 1;
+this.xPosition = this.xPosition + 1;
+displayPieces();
+}
+
+
+else if(this.order == 'two'){
+
+this.yPosition = this.yPosition - 1;
+this.xPosition = this.xPosition + 1;
+displayPieces();
 }
 
 }  
@@ -65,19 +137,91 @@ let playerTwo = {
 }
 
 
-function displayPieces(player){
+
+function pushToGameboard(){
+for(let piece of playerOne.pieces){
+for(let i = 0 ;32 > i;i++){
+if(piece.getPositionNameForGameBoardArray() == i){
+gameBoard[i] = piece;
+
+}
+
+}
+
+}
+
+for(let piece of playerTwo.pieces){
+
+for(let i =0;32 >i;i++){
+if(piece.getPositionNameForGameBoardArray() == i){
+gameBoard[i] = piece;
+}
+
+}
+
+}
+
+}
+
+
+let gameBoard = [];
+pushToGameboard();
+
+function displayPieces(){
+removeImgFromDiv();
+
 let playerPiece;
+updatePlayer(playerOne);
+updatePlayer(playerTwo);
+
+
+}
+
+
+
+function removeImgFromDiv() {
+let gameBoardImages = document.querySelectorAll(`#gameBoard img`)
+for(let gameBoardImage of gameBoardImages){
+gameBoardImage.parentNode.removeChild(gameBoardImage);
+}
+}
+
+function  updatePlayer(player){
+
 for(let i = 0;player.pieces.length > i; i++){
 img = document.createElement('img');
 img.src = `images/${player.nameForImage}`;
-console.log(`position: ${player.pieces[i].getPositionName()}`)
-document.querySelector(`#${player.pieces[i].getPositionName()}`).appendChild(img)
+img.id = `${player.pieces[i].getPositionNameForId()}`
+img.addEventListener('click', selectMovement)
+document.querySelector(`#${player.pieces[i].getPositionNameForId()}`).appendChild(img)
+}
+}
 
+
+
+displayPieces();
+
+
+if(mode = 'selectPlayer'){
+
+function selectMovement(event){
+currentPiece = returnPiece(event);
+mode = 'movePlayer';
+spots = document.querySelectorAll(' gameBoard blackPiece ');
+}
+}
+
+
+function returnPiece(event){
+for(let playerOnePiece of playerOne.pieces){
+if(playerOnePiece.getPositionNameForId() == event.target.id)
+return playerOnePiece;
+}
+
+
+for(let playerTwoPiece of playerTwo.pieces){
+if(playerTwoPiece.getPositionNameForId() == event.target.id)
+return playerTwoPiece;
 }
 
 }
-displayPieces(playerOne);
-displayPieces(playerTwo);
-
-playerOne.pieces[11].moveDiagonallyToLeft();
-playerTwo.pieces[11].moveDiagonallyToLeft();
