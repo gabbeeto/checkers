@@ -1,4 +1,6 @@
 
+
+
 export default class playerPiece{
 constructor(yPosition, xPosition ,order ){
 this.xPosition = xPosition;
@@ -118,17 +120,4 @@ displayPieces();
 
 
 
-
-export let playerOne = {
-	nameForImage: 'playerOne.png',
-	nameForKingImage: 'playerOneKing.png',
-	pieces: [new playerPiece(1,1, 'one'), new playerPiece(1,3, 'one'), new playerPiece(1,5, 'one'), new playerPiece(1,7, 'one'),new playerPiece(2,2, 'one'),new playerPiece(2,4,'one'),new playerPiece(2,6,'one'),new playerPiece(2,8,'one'),new playerPiece(3,1,'one'), new playerPiece(3,3,'one'), new playerPiece(3,5,'one'), new playerPiece(3,7,'one')]
-}
-
-
-export let playerTwo = {
-	nameForImage: 'playerTwo.png',
-	nameForKingImage: 'playerTwoKing.png',
-	pieces: [new playerPiece(8,2,'two'),new playerPiece(8,4,'two'),new playerPiece(8,6,'two'),new playerPiece(8,8,'two'), new playerPiece(7,1,'two'), new playerPiece(7,3,'two'), new playerPiece(7,5,'two'), new playerPiece(7,7,'two'),new playerPiece(6,2,'two'),new playerPiece(6,4,'two'),new playerPiece(6,6,'two'),new playerPiece(6,8,'two')]
-}
 
